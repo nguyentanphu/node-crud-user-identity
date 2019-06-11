@@ -2,8 +2,9 @@
   "name": "node-crud-user-identity",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "user-server.js",
   "scripts": {
+    "start": "cross-env PORT=3333 node user-server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
