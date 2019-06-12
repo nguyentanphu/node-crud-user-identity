@@ -100,10 +100,11 @@ server.del('/destroy/:username', async (req, res, next) => {
 // Check password
 server.post('/passwordCheck', async (req, res, next) => {
 	try {
-		await usersModel.userPasswordCheck(req.params.username, req.params.password)
+		const check = await usersModel.userPasswordCheck(req.params.username, req.params.password)
 		res.send(check)
 		next(false)
 	} catch (err) {
+		console.log(err)
 		res.send(500, err)
 		next(false)
 	}
@@ -132,24 +133,23 @@ const apiKeys = [{
 }];
 
 function check(req, res, next) {
-
 	if (req.authorization) {
-		var found = false;
+		var found = false
 		for (let auth of apiKeys) {
 			if (auth.key === req.authorization.basic.password
 				&& auth.user === req.authorization.basic.username) {
-				found = true;
-				break;
+				found = true
+				break
 			}
 		}
-		if (found) next();
+		if (found) next()
 		else {
-			res.send(401, new Error("Not authenticated"));
-			next(false);
+			res.send(401, new Error("Not authenticated"))
+			next(false)
 		}
 	} else {
-		res.send(500, new Error('No Authorization Key'));
-		next(false);
+		res.send(500, new Error('No Authorization Key'))
+		next(false)
 	}
 }
 

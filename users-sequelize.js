@@ -71,14 +71,14 @@ exports.update = async (username, password, provider, familyName, givenName, mid
 
 exports.destroy =  async (username) => {
 	const SQUser = await connectDb();
-	const user = await SQUser.find({ where: { username: username } });
+	const user = await SQUser.findOne({ where: { username: username } });
 	if (!user) throw new Error('Did not find requested ' + username + ' to delete');
 	user.destroy();
 }
 
 exports.userPasswordCheck = async (username, password) => {
 	const SQUser = await connectDb();
-	const user = await SQUser.find({ where: { username: username } });
+	const user = await SQUser.findOne({ where: { username: username } });
 	if (!user) {
 		return { check: false, username: username, message: 'Could not find user' };
 	} else if (user.username === username && user.password === password) {
